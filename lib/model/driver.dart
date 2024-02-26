@@ -19,10 +19,11 @@ class DriverModel {
   Map<String, String> toJson() {
     return {
       "uid": uid,
+      "email" : email,
       "fName": fName,
       "lName": lName,
       "busNumber": busNumber,
-      "contactNumber": contactNumber,
+      "contact": contactNumber,
       "address": address
     };
   }

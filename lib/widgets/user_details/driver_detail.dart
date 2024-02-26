@@ -1,4 +1,5 @@
 import 'package:erp_management/model/driver.dart';
+import 'package:erp_management/pages/new user creation/functions/new_user_creation_functions.dart';
 import 'package:flutter/material.dart';
 
 final _formKey = GlobalKey<FormState>();
@@ -128,9 +129,17 @@ class _DriverDetailsState extends State<DriverDetails> {
   }
 }
 
-Future<void> sendDriverDetailsToServer() async {
+void sendDriverDetailsToServer() async {
   var valid = _formKey.currentState?.validate();
-  if(valid!){
-    print(DriverModel(uid: _driverUidController.text, fName: _driverFNameController.text, lName:( _driverLNameController.text == "") ? " ": _driverLNameController.text, busNumber: _driverBusNumberController.text, contactNumber: _driverContactController.text, address: _driverAddressController.text, email: _driverEmailController.text).toJson());
-  }
+  if (valid!) {
+    var isAdded = await NewUserCreationFunction().addDriverDetail(
+    DriverModel(uid: _driverUidController.text,
+        fName: _driverFNameController.text,
+        lName: _driverLNameController.text,
+        busNumber: _driverBusNumberController.text,
+        contactNumber: _driverContactController.text,
+        address: _driverAddressController.text,
+        email: _driverEmailController.text).toJson());
+    print(isAdded);
+}
 }
