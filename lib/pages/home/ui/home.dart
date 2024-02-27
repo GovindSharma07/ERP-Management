@@ -5,22 +5,22 @@ import 'package:erp_management/widgets/custom_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+HomeBloc _homeBloc = HomeBloc();
+
+
 class Home extends StatefulWidget {
   const Home({super.key});
+
+  void addDoneEvent() {
+    _homeBloc.add(DoneEvent());
+  }
 
   @override
   State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  late HomeBloc _homeBloc;
   String title = "Home";
-
-  @override
-  void initState() {
-    _homeBloc = HomeBloc();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,12 +58,17 @@ class _HomeState extends State<Home> {
   Widget _getHomeScreen(HomeState state) {
     if (state is NewUserState) {
       return const NewUserCreation();
+    } else if (state is DoneState) {
+      return Image.asset(
+        "assets/bg/done.png",
+        fit: BoxFit.fill,
+      );
     } else {
       return Center(
           child: Image.asset(
-              "assets/bg/college.png",
-              fit: BoxFit.fill,
-            ));
+        "assets/bg/college.png",
+        fit: BoxFit.fill,
+      ));
     }
   }
 }

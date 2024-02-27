@@ -26,6 +26,6 @@ class NewUserCreationFunction {
     var response = await http.post(url,
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(detail));
-    return response.body;
+    return jsonDecode(response.body);
   }
 }
