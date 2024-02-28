@@ -1,18 +1,18 @@
 class DriverModel {
-  late String uid;
-  late String email;
-  late String fName;
-  late String lName;
-  late String busNumber;
-  late String contactNumber;
-  late String address;
+  String uid;
+  String email;
+  String fName;
+  String lName;
+  String busNumber;
+  String contact;
+  String address;
 
   DriverModel(
       {required this.uid,
       required this.fName,
       required this.lName,
       required this.busNumber,
-      required this.contactNumber,
+      required this.contact,
       required this.address,
       required this.email});
 
@@ -23,7 +23,7 @@ class DriverModel {
       "fName": fName,
       "lName": lName,
       "busNumber": busNumber,
-      "contact": contactNumber,
+      "contact": contact,
       "address": address
     };
   }

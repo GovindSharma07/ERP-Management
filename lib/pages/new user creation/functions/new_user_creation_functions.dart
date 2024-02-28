@@ -19,7 +19,7 @@ class NewUserCreationFunction {
     return jsonDecode(response.body);
   }
 
-  Future<dynamic> addDriverDetail(Map<String, String> detail) async {
+  Future<bool> addDriverDetail(Map<String, String> detail) async {
     var url = Uri.parse(
         "https://fcm-notification-server.onrender.com/api/user/addDriverDetails");
 
@@ -28,4 +28,16 @@ class NewUserCreationFunction {
         body: jsonEncode(detail));
     return jsonDecode(response.body);
   }
+
+  Future<bool> addTeacherDetail(Map<String, String> details) async {
+    var url = Uri.parse(
+        "https://fcm-notification-server.onrender.com/api/user/addTeacherDetails");
+
+    var response = await http.post(url,
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(details));
+  print(jsonDecode(response.body));
+    return jsonDecode(response.body);
+  }
+
 }

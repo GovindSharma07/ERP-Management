@@ -1,6 +1,7 @@
 import 'package:erp_management/extra/user_type.dart';
 import 'package:erp_management/pages/new%20user%20creation/functions/new_user_creation_functions.dart';
 import 'package:erp_management/widgets/user_details/driver_detail.dart';
+import 'package:erp_management/widgets/user_details/teacher_detail.dart';
 import 'package:flutter/material.dart';
 
 UserType? _userType = UserType.teacher;
@@ -91,6 +92,8 @@ class _NewUserCreationState extends State<NewUserCreation> {
           }else if(_currentStep == 2){
             if(_userType == UserType.driver){
               sendDriverDetailsToServer();
+            }else if(_userType == UserType.teacher){
+              sendTeacherDetailsToServer();
             }
           }
           setState(() {
@@ -156,8 +159,13 @@ class _NewUserCreationState extends State<NewUserCreation> {
   }
 
   Widget _getDetailUi() {
+    if(_userType == UserType.driver){
     return DriverDetails(email: _email,uid: _uid);
   }
+    else{
+      return TeacherDetails(uid: _uid, email: _email);
+    }
+    }
 }
 
 class UserTypeSelection extends StatefulWidget {

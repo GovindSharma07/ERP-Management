@@ -1,5 +1,4 @@
 import 'package:erp_management/model/driver.dart';
-import 'package:erp_management/pages/home/bloc/home_bloc.dart';
 import 'package:erp_management/pages/home/ui/home.dart';
 import 'package:erp_management/pages/new user creation/functions/new_user_creation_functions.dart';
 import 'package:flutter/material.dart';
@@ -139,7 +138,7 @@ void sendDriverDetailsToServer() async {
         fName: _driverFNameController.text,
         lName: _driverLNameController.text,
         busNumber: _driverBusNumberController.text,
-        contactNumber: _driverContactController.text,
+        contact: _driverContactController.text,
         address: _driverAddressController.text,
         email: _driverEmailController.text).toJson());
     if(isAdded){
