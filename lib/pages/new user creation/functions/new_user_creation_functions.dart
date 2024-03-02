@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import "package:erp_management/extra/constants.dart" as constants;
 import 'package:erp_management/extra/user_type.dart';
 import "package:http/http.dart" as http;
 
@@ -8,8 +8,7 @@ class NewUserCreationFunction {
 
   Future<List<dynamic>> createUserUsingEmailAndPassword(
       String email, String password) async {
-    var url = Uri.parse(
-        "https://fcm-notification-server.onrender.com/api/user/createUser");
+    var url = Uri.parse(constants.createUserUrl);
     var body = {
       "email": email,
       "password": password,
@@ -20,8 +19,7 @@ class NewUserCreationFunction {
   }
 
   Future<bool> addDriverDetail(Map<String, String> detail) async {
-    var url = Uri.parse(
-        "https://fcm-notification-server.onrender.com/api/user/addDriverDetails");
+    var url = Uri.parse(constants.addDriverDetailUrl);
 
     var response = await http.post(url,
         headers: {"Content-Type": "application/json"},
@@ -30,14 +28,22 @@ class NewUserCreationFunction {
   }
 
   Future<bool> addTeacherDetail(Map<String, String> details) async {
-    var url = Uri.parse(
-        "https://fcm-notification-server.onrender.com/api/user/addTeacherDetails");
+    var url = Uri.parse(constants.addTeacherDetailUrl);
 
     var response = await http.post(url,
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(details));
-  print(jsonDecode(response.body));
+    print(jsonDecode(response.body));
     return jsonDecode(response.body);
   }
 
+  Future<bool> addStudentDetail(Map<String, String> details) async {
+    var url = Uri.parse(constants.addStudentDetailUrl);
+
+    var response = await http.post(url,
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(details));
+    print(jsonDecode(response.body));
+    return jsonDecode(response.body);
+  }
 }

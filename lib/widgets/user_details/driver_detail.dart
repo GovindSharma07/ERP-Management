@@ -24,17 +24,6 @@ class DriverDetails extends StatefulWidget {
 }
 
 class _DriverDetailsState extends State<DriverDetails> {
-  @override
-  void dispose() {
-    _driverAddressController.dispose();
-    _driverContactController.dispose();
-    _driverBusNumberController.dispose();
-    _driverLNameController.dispose();
-    _driverFNameController.dispose();
-    _driverEmailController.dispose();
-    _driverUidController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +119,7 @@ class _DriverDetailsState extends State<DriverDetails> {
   }
 }
 
-void sendDriverDetailsToServer() async {
+Future<void> sendDriverDetailsToServer() async {
   var valid = _formKey.currentState?.validate();
   if (valid!) {
     var isAdded = await NewUserCreationFunction().addDriverDetail(

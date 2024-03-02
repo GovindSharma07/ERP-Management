@@ -61,7 +61,7 @@ class _HomeState extends State<Home> {
     } else if (state is DoneState) {
       return Image.asset(
         "assets/bg/done.png",
-        fit: BoxFit.fill,
+        fit: BoxFit.scaleDown,
       );
     } else {
       return Center(

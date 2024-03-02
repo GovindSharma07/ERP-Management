@@ -25,18 +25,6 @@ class TeacherDetails extends StatefulWidget {
 }
 
 class _TeacherDetailsState extends State<TeacherDetails> {
-  @override
-  void dispose() {
-    _teacherAddressController.dispose();
-    _teacherContactController.dispose();
-    _teacherBusAllocatedController.dispose();
-    _teacherLNameController.dispose();
-    _teacherFNameController.dispose();
-    _teacherEmailController.dispose();
-    _teacherUidController.dispose();
-    _teacherDepartmentController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +126,7 @@ class _TeacherDetailsState extends State<TeacherDetails> {
   }
 }
 
-void sendTeacherDetailsToServer() async {
+Future<void> sendTeacherDetailsToServer() async {
   var valid = _formKey.currentState?.validate();
   if (valid!) {
     var isAdded = await NewUserCreationFunction().addTeacherDetail(TeacherModel(
