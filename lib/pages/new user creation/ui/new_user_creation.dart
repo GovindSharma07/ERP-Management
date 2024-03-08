@@ -1,8 +1,8 @@
 import 'package:erp_management/extra/user_type.dart';
 import 'package:erp_management/pages/new%20user%20creation/functions/new_user_creation_functions.dart';
-import 'package:erp_management/widgets/user_details/driver_detail.dart';
-import 'package:erp_management/widgets/user_details/student_detail.dart';
-import 'package:erp_management/widgets/user_details/teacher_detail.dart';
+import 'package:erp_management/widgets/user_details/driver_detail_screen.dart';
+import 'package:erp_management/widgets/user_details/student_detail_screen.dart';
+import 'package:erp_management/widgets/user_details/teacher_detail_screen.dart';
 import 'package:flutter/material.dart';
 
 UserType? _userType = UserType.teacher;

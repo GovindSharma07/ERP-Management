@@ -1,4 +1,4 @@
-import 'package:erp_management/model/driver.dart';
+import 'package:erp_management/model/driver_model.dart';
 import 'package:erp_management/pages/home/ui/home.dart';
 import 'package:erp_management/pages/new user creation/functions/new_user_creation_functions.dart';
 import 'package:flutter/material.dart';

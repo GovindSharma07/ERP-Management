@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'package:erp_management/database/users_database.dart';
 import "package:erp_management/extra/constants.dart" as constants;
 import 'package:erp_management/extra/user_type.dart';
+import 'package:erp_management/model/student_model.dart';
 import "package:http/http.dart" as http;
 
 class NewUserCreationFunction {
@@ -37,13 +39,14 @@ class NewUserCreationFunction {
     return jsonDecode(response.body);
   }
 
-  Future<bool> addStudentDetail(Map<String, String> details) async {
+  Future<bool> addStudentDetail(StudentModel studentModel) async {
     var url = Uri.parse(constants.addStudentDetailUrl);
 
     var response = await http.post(url,
         headers: {"Content-Type": "application/json"},
-        body: jsonEncode(details));
+        body: jsonEncode(studentModel.toJson()));
     print(jsonDecode(response.body));
+    await UsersDatabaseHelper().addStudentDetails(studentModel);
     return jsonDecode(response.body);
   }
 }

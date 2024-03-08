@@ -1,3 +1,4 @@
+import 'package:erp_management/pages/fees/ui/fees.dart';
 import 'package:erp_management/pages/home/bloc/home_bloc.dart';
 import 'package:erp_management/pages/new%20user%20creation/ui/new_user_creation.dart';
 import 'package:erp_management/size/size.dart';
@@ -28,8 +29,17 @@ class _HomeState extends State<Home> {
     return BlocBuilder<HomeBloc, HomeState>(
         bloc: _homeBloc,
         builder: (context, state) {
-          if (state is NewUserState) {
-            title = "Create New User";
+          switch (state) {
+            case NewUserState():
+              title = "Create New User";
+              break;
+            case FeesState():
+              title = "Fees";
+              break;
+            case DoneState():
+              title = "Done";
+            default:
+              title = "Home";
           }
 
           return Scaffold(
@@ -56,19 +66,22 @@ class _HomeState extends State<Home> {
   }
 
   Widget _getHomeScreen(HomeState state) {
-    if (state is NewUserState) {
-      return const NewUserCreation();
-    } else if (state is DoneState) {
-      return Image.asset(
-        "assets/bg/done.png",
-        fit: BoxFit.scaleDown,
-      );
-    } else {
-      return Center(
-          child: Image.asset(
-        "assets/bg/college.png",
-        fit: BoxFit.fill,
-      ));
+    switch (state) {
+      case NewUserState():
+        return const NewUserCreation();
+      case FeesState():
+        return Fees();
+      case DoneState():
+        return Image.asset(
+          "assets/bg/done.png",
+          fit: BoxFit.scaleDown,
+        );
+      default:
+        return Center(
+            child: Image.asset(
+          "assets/bg/college.png",
+          fit: BoxFit.fill,
+        ));
     }
   }
 }

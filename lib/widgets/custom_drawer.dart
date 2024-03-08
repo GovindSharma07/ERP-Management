@@ -19,7 +19,11 @@ class CustomDrawer extends StatelessWidget {
               },
               child: _getElevatedButton("Create New User",Icons.add_reaction_outlined)),
           _getElevatedButton("Update User Details",Icons.update_outlined),
-          _getElevatedButton("Fees",Icons.monetization_on_outlined),
+          InkWell(
+              onTap: (){
+                _bloc.add(FeesEvent());
+              },
+              child: _getElevatedButton("Fees",Icons.monetization_on_outlined)),
           _getElevatedButton("Library Management",Icons.library_books_outlined)
         ],
       ),
@@ -35,8 +39,8 @@ class CustomDrawer extends StatelessWidget {
           color: Colors.indigo),
       width: 290,
       child: ListTile(
-        leading: Icon(icon,color: Colors.black,),
-        title: Text(text,style: TextStyle(fontWeight: FontWeight.w600),),
+        leading: Icon(icon,color: Colors.white,),
+        title: Text(text,style: TextStyle(fontWeight: FontWeight.w500,color: Colors.white),),
       ),
     );
   }

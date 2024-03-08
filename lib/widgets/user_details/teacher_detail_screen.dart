@@ -1,7 +1,7 @@
 import 'package:erp_management/pages/home/ui/home.dart';
 import 'package:erp_management/pages/new user creation/functions/new_user_creation_functions.dart';
 import 'package:flutter/material.dart';
-import '../../model/teacher.dart';
+import '../../model/teacher_model.dart';
 
 final _formKey = GlobalKey<FormState>();
 

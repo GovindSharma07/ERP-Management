@@ -1,7 +1,11 @@
+import 'package:erp_management/database/fees_database.dart';
+import 'package:erp_management/database/users_database.dart';
 import 'package:erp_management/pages/home/ui/home.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  UsersDatabaseHelper();
+  FeesDatabaseHelper();
   runApp(const MyApp());
 }
 

@@ -7,6 +7,7 @@ class StudentModel {
   String dateOfBirth;
   String gender;
   String annualFees;
+  String feesPaid;
   String busAllocated;
   String studentContact;
   String parentContact;
@@ -23,6 +24,7 @@ class StudentModel {
     required this.dateOfBirth,
     required this.gender,
     required this.annualFees,
+    this.feesPaid = "0",
     required this.busAllocated,
     required this.studentContact,
     required this.parentContact,
@@ -38,9 +40,10 @@ class StudentModel {
       "fName": fName,
       "lName": lName,
       "rollNo": rollNo,
-      "dob": dateOfBirth,
+      "dateOfBirth": dateOfBirth,
       "gender": gender,
-      "annualFees" : annualFees,
+      "annualFees": annualFees,
+      "feesPaid" : feesPaid,
       "busAllocated": busAllocated,
       "studentContact": studentContact,
       "parentContact": parentContact,
@@ -48,5 +51,23 @@ class StudentModel {
       "course": course,
       "section": section
     };
+  }
+
+  factory StudentModel.fromJson(Map<String, dynamic> json){
+    return StudentModel(uid: json["uid"]!,
+        email: json["email"]!,
+        fName: json["fName"]!,
+        lName: json["lName"]!,
+        rollNo: json["rollNo"]!,
+        dateOfBirth: json["dateOfBirth"]!,
+        gender: json["gender"]!,
+        annualFees: json["annualFees"]!,
+        feesPaid: json["feesPaid"] ?? "0",
+        busAllocated: json["busAllocated"]!,
+        studentContact: json["studentContact"]!,
+        parentContact: json["parentContact"]!,
+        address: json["address"]!,
+        course: json["course"]!,
+        section: json["section"]!);
   }
 }
