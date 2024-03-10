@@ -2,8 +2,8 @@ import 'package:erp_management/model/student_model.dart';
 import 'package:erp_management/pages/fees/bloc/fees_bloc.dart';
 import 'package:flutter/material.dart';
 
-class UserDetailBubble extends StatefulWidget {
-  const UserDetailBubble({
+class StudentFeesBubble extends StatefulWidget {
+  const StudentFeesBubble({
     super.key,
     required this.studentModel,
     required this.feesBloc,
@@ -13,10 +13,10 @@ class UserDetailBubble extends StatefulWidget {
   final StudentModel studentModel;
 
   @override
-  State<UserDetailBubble> createState() => _UserDetailBubbleState();
+  State<StudentFeesBubble> createState() => _StudentFeesBubbleState();
 }
 
-class _UserDetailBubbleState extends State<UserDetailBubble> {
+class _StudentFeesBubbleState extends State<StudentFeesBubble> {
   @override
   Widget build(BuildContext context) {
     return Container(

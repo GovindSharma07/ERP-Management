@@ -17,20 +17,27 @@ class CustomDrawer extends StatelessWidget {
               onTap: () {
                 _bloc.add(NewUserEvent());
               },
-              child: _getElevatedButton("Create New User",Icons.add_reaction_outlined)),
-          _getElevatedButton("Update User Details",Icons.update_outlined),
+              child: _getElevatedButton(
+                  "Create New User", Icons.add_reaction_outlined)),
           InkWell(
               onTap: (){
+                _bloc.add(UpdateUserEvent());
+              },
+              child: _getElevatedButton(
+                  "Update User Details", Icons.update_outlined)),
+          InkWell(
+              onTap: () {
                 _bloc.add(FeesEvent());
               },
-              child: _getElevatedButton("Fees",Icons.monetization_on_outlined)),
-          _getElevatedButton("Library Management",Icons.library_books_outlined)
+              child:
+                  _getElevatedButton("Fees", Icons.monetization_on_outlined)),
+          _getElevatedButton("Library Management", Icons.library_books_outlined)
         ],
       ),
     );
   }
 
-  Widget _getElevatedButton(String text,IconData icon) {
+  Widget _getElevatedButton(String text, IconData icon) {
     return Container(
       padding: const EdgeInsets.all(5),
       margin: const EdgeInsets.all(10),
@@ -39,8 +46,15 @@ class CustomDrawer extends StatelessWidget {
           color: Colors.indigo),
       width: 290,
       child: ListTile(
-        leading: Icon(icon,color: Colors.white,),
-        title: Text(text,style: TextStyle(fontWeight: FontWeight.w500,color: Colors.white),),
+        leading: Icon(
+          icon,
+          color: Colors.white,
+        ),
+        title: Text(
+          text,
+          style:
+              const TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+        ),
       ),
     );
   }

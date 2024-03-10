@@ -19,10 +19,13 @@ final _parentContactController = TextEditingController();
 final _studentAddressController = TextEditingController();
 final _studentCourseController = TextEditingController();
 final _studentSectionController = TextEditingController();
+late String? _feesPaid;
 
 class StudentDetails extends StatefulWidget {
-  const StudentDetails({required this.uid, required this.email, super.key});
+  const StudentDetails(
+      {required this.uid, required this.email, super.key, this.studentModel});
 
+  final StudentModel? studentModel;
   final String uid;
   final String email;
 
@@ -31,11 +34,29 @@ class StudentDetails extends StatefulWidget {
 }
 
 class _StudentDetailsState extends State<StudentDetails> {
+
+
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _studentUidController.text = widget.uid;
-      _studentEmailController.text = widget.email;
+      _studentUidController.text = widget.studentModel?.uid ?? widget.uid;
+      _studentEmailController.text = widget.studentModel?.email ?? widget.email;
+      _studentFNameController.text = widget.studentModel?.fName ?? "";
+      _studentLNameController.text = widget.studentModel?.lName ?? "";
+      _studentRollNoController.text = widget.studentModel?.rollNo ?? "";
+      _studentDateOfBirthController.text =
+          widget.studentModel?.dateOfBirth ?? "";
+      _studentGenderController.text = widget.studentModel?.gender ?? "";
+      _studentAnnualFees.text = widget.studentModel?.annualFees ?? "";
+      _studentBusAllocatedController.text =
+          widget.studentModel?.busAllocated ?? "";
+      _studentContactController.text =
+          widget.studentModel?.studentContact ?? "";
+      _parentContactController.text = widget.studentModel?.parentContact ?? "";
+      _studentAddressController.text = widget.studentModel?.address ?? "";
+      _studentCourseController.text = widget.studentModel?.course ?? "";
+      _studentSectionController.text = widget.studentModel?.section ?? "";
+      _feesPaid = widget.studentModel?.feesPaid;
     });
     return Form(
       key: _formKey,
@@ -72,15 +93,17 @@ class _StudentDetailsState extends State<StudentDetails> {
             validator: (value) {
               return value == "" ? "Field can't be remained empty" : null;
             },
-            autofillHints:const ["Male","Female","Other"],
+            autofillHints: const ["Male", "Female", "Other"],
             decoration: const InputDecoration(
                 label: Text("*Student's Gender"), border: OutlineInputBorder()),
           ),
           //AnnualFees
           TextFormField(
             controller: _studentAnnualFees,
-            validator: (value){
-              return RegExp(r'^[0-9]').hasMatch(value ??"") ? null : "Invalid input";
+            validator: (value) {
+              return RegExp(r'^[0-9]').hasMatch(value ?? "")
+                  ? null
+                  : "Invalid input";
             },
             decoration: const InputDecoration(
                 label: Text("*Student's Annual Fees"),
@@ -191,23 +214,23 @@ Future<void> sendStudentDetailsToServer() async {
   var valid = _formKey.currentState?.validate();
   if (valid!) {
     var isAdded = await NewUserCreationFunction().addStudentDetail(StudentModel(
-      uid: _studentUidController.text,
-      fName: _studentFNameController.text,
-      lName: _studentLNameController.text,
-      busAllocated: _studentBusAllocatedController.text,
-      address: _studentAddressController.text,
-      email: _studentEmailController.text,
-      rollNo: _studentRollNoController.text,
-      dateOfBirth: _studentDateOfBirthController.text,
-      gender: _studentGenderController.text,
-      studentContact: _studentContactController.text,
-      parentContact: _parentContactController.text,
-      course: _studentCourseController.text,
-      section: _studentSectionController.text,
-      annualFees: _studentAnnualFees.text
-    ));
+        uid: _studentUidController.text,
+        fName: _studentFNameController.text,
+        lName: _studentLNameController.text,
+        busAllocated: _studentBusAllocatedController.text,
+        address: _studentAddressController.text,
+        email: _studentEmailController.text,
+        rollNo: _studentRollNoController.text,
+        dateOfBirth: _studentDateOfBirthController.text,
+        gender: _studentGenderController.text,
+        studentContact: _studentContactController.text,
+        parentContact: _parentContactController.text,
+        course: _studentCourseController.text,
+        section: _studentSectionController.text,
+        annualFees: _studentAnnualFees.text,
+        feesPaid: _feesPaid ?? "0"));
     if (isAdded) {
-      const Home().addDoneEvent();
+      Home().addDoneEvent();
     }
   }
 }

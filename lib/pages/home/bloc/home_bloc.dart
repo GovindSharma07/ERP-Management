@@ -11,6 +11,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(HomeInitial()) {
     on<NewUserEvent>(_newUserEvent);
     on<FeesEvent>(_feesEvent);
+    on<UpdateUserEvent>(_updateUserEvent);
     on<DoneEvent>(_doneEvent);
   }
 
@@ -25,5 +26,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   FutureOr<void> _feesEvent(FeesEvent event, Emitter<HomeState> emit) {
     emit(FeesState());
+  }
+
+  FutureOr<void> _updateUserEvent(UpdateUserEvent event, Emitter<HomeState> emit) {
+    emit(UpdateUserState());
   }
 }

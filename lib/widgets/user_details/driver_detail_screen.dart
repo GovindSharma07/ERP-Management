@@ -14,8 +14,8 @@ final _driverUidController = TextEditingController();
 final _driverEmailController = TextEditingController();
 
 class DriverDetails extends StatefulWidget {
-  const DriverDetails({required this.uid, required this.email, super.key});
-
+  const DriverDetails({required this.uid, required this.email,this.driverModel ,super.key});
+  final DriverModel? driverModel;
   final String uid;
   final String email;
 
@@ -28,8 +28,13 @@ class _DriverDetailsState extends State<DriverDetails> {
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _driverUidController.text = widget.uid;
-      _driverEmailController.text = widget.email;
+      _driverUidController.text = widget.driverModel?.uid ?? widget.uid;
+      _driverEmailController.text = widget.driverModel?.email ?? widget.email;
+      _driverFNameController.text = widget.driverModel?.fName ?? "";
+      _driverLNameController.text = widget.driverModel?.lName ?? "";
+      _driverBusNumberController.text = widget.driverModel?.busNumber ?? "";
+      _driverContactController.text = widget.driverModel?.contact ?? "";
+      _driverAddressController.text = widget.driverModel?.address ?? "";
     });
     return Form(
       key: _formKey,
@@ -129,9 +134,9 @@ Future<void> sendDriverDetailsToServer() async {
         busNumber: _driverBusNumberController.text,
         contact: _driverContactController.text,
         address: _driverAddressController.text,
-        email: _driverEmailController.text).toJson());
+        email: _driverEmailController.text));
     if(isAdded){
-      const Home().addDoneEvent();
+      Home().addDoneEvent();
     }
 }
 }

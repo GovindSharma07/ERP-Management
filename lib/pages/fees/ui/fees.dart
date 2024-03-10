@@ -2,7 +2,7 @@ import "package:erp_management/database/users_database.dart";
 import "package:erp_management/model/student_model.dart";
 import "package:erp_management/pages/fees/bloc/fees_bloc.dart";
 import "package:erp_management/pages/fees/ui/fees_submit_screen.dart";
-import "package:erp_management/widgets/student_detail_bubble.dart";
+import "package:erp_management/widgets/student_fees_bubble.dart";
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:flutter/widgets.dart";
@@ -93,13 +93,13 @@ class Fees extends StatelessWidget {
                  ),
                 Expanded(
                   child: FutureBuilder<List<StudentModel>>(
-                      future: userDb.getAllUsers(state.name,state.rollNo,state.course,state.section),
+                      future: userDb.getAllStudents(state.name,state.rollNo,state.course,state.section),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           return ListView.builder(
                               itemCount: snapshot.data!.length,
                               itemBuilder: (context, index) {
-                                return UserDetailBubble(
+                                return StudentFeesBubble(
                                   studentModel: snapshot.data![index],
                                   feesBloc: _feesBloc,
                                 );

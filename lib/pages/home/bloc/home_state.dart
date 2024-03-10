@@ -9,4 +9,6 @@ final class NewUserState extends HomeState{}
 
 final class FeesState extends HomeState{}
 
+final class UpdateUserState extends HomeState{}
+
 final class DoneState extends HomeState{}

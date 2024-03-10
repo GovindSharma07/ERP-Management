@@ -3,6 +3,7 @@ import 'package:erp_management/pages/new%20user%20creation/functions/new_user_cr
 import 'package:erp_management/widgets/user_details/driver_detail_screen.dart';
 import 'package:erp_management/widgets/user_details/student_detail_screen.dart';
 import 'package:erp_management/widgets/user_details/teacher_detail_screen.dart';
+import 'package:erp_management/widgets/user_type_selection.dart';
 import 'package:flutter/material.dart';
 
 UserType? _userType = UserType.teacher;
@@ -23,6 +24,7 @@ class _NewUserCreationState extends State<NewUserCreation> {
   String _password = "";
   String _uid = "";
   bool _processing = false;
+  final UserTypeSelection _userTypeSelection = UserTypeSelection();
 
   @override
   void initState() {
@@ -69,7 +71,7 @@ class _NewUserCreationState extends State<NewUserCreation> {
             _processing = true;
           });
           if (_currentStep == 0) {
-            _function.userType = _userType!;
+            _userType = _userTypeSelection.userType;
             setState(() {
               _currentStep = 1;
             });
@@ -79,7 +81,6 @@ class _NewUserCreationState extends State<NewUserCreation> {
                 _errorMessage = "Field can't be remained empty";
               });
             } else {
-              print("Entered");
               var response = await _function.createUserUsingEmailAndPassword(
                   _email, _password);
               if (response[0]) {
@@ -90,12 +91,12 @@ class _NewUserCreationState extends State<NewUserCreation> {
                 _errorMessage = response[1]["message"];
               }
             }
-          }else if(_currentStep == 2){
-            if(_userType == UserType.driver){
+          } else if (_currentStep == 2) {
+            if (_userType == UserType.driver) {
               await sendDriverDetailsToServer();
-            }else if(_userType == UserType.teacher){
+            } else if (_userType == UserType.teacher) {
               await sendTeacherDetailsToServer();
-            }else if(_userType == UserType.student){
+            } else if (_userType == UserType.student) {
               await sendStudentDetailsToServer();
             }
           }
@@ -111,7 +112,7 @@ class _NewUserCreationState extends State<NewUserCreation> {
           }
         },
         steps: [
-          const Step(title: Text("Select Type"), content: UserTypeSelection()),
+          Step(title: const Text("Select Type"), content: _userTypeSelection),
           Step(
               title: const Text("Email and Password"),
               content: Column(
@@ -144,7 +145,6 @@ class _NewUserCreationState extends State<NewUserCreation> {
                       Expanded(
                         child: TextFormField(
                           controller: _passwordController,
-                          keyboardType: TextInputType.visiblePassword,
                           onChanged: (value) {
                             _password = value;
                           },
@@ -157,68 +157,9 @@ class _NewUserCreationState extends State<NewUserCreation> {
                   ),
                 ],
               )),
-          Step(title: const Text("Details"), content: _getDetailUi())
+          Step(
+              title: const Text("Details"),
+              content: _userTypeSelection.getDetailUi(_email, _uid))
         ]);
-  }
-
-  Widget _getDetailUi() {
-    if(_userType == UserType.driver){
-    return DriverDetails(email: _email,uid: _uid);
-  }else if(_userType == UserType.student){
-      return StudentDetails(uid: _uid, email: _email);
-    }
-    else{
-      return TeacherDetails(uid: _uid, email: _email);
-    }
-    }
-}
-
-class UserTypeSelection extends StatefulWidget {
-  const UserTypeSelection({super.key});
-
-  @override
-  State<UserTypeSelection> createState() => _UserTypeSelectionState();
-}
-
-class _UserTypeSelectionState extends State<UserTypeSelection> {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ListTile(
-          title: const Text("Teacher"),
-          leading: Radio(
-              value: UserType.teacher,
-              groupValue: _userType,
-              onChanged: (value) {
-                setState(() {
-                  _userType = value;
-                });
-              }),
-        ),
-        ListTile(
-          title: const Text("Student"),
-          leading: Radio(
-              value: UserType.student,
-              groupValue: _userType,
-              onChanged: (value) {
-                setState(() {
-                  _userType = value;
-                });
-              }),
-        ),
-        ListTile(
-          title: const Text("Driver"),
-          leading: Radio(
-              value: UserType.driver,
-              groupValue: _userType,
-              onChanged: (value) {
-                setState(() {
-                  _userType = value;
-                });
-              }),
-        )
-      ],
-    );
   }
 }

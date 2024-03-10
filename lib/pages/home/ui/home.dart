@@ -1,6 +1,7 @@
 import 'package:erp_management/pages/fees/ui/fees.dart';
 import 'package:erp_management/pages/home/bloc/home_bloc.dart';
 import 'package:erp_management/pages/new%20user%20creation/ui/new_user_creation.dart';
+import 'package:erp_management/pages/update_user_details/ui/update_user_details.dart';
 import 'package:erp_management/size/size.dart';
 import 'package:erp_management/widgets/custom_drawer.dart';
 import 'package:flutter/material.dart';
@@ -9,18 +10,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 HomeBloc _homeBloc = HomeBloc();
 
 
-class Home extends StatefulWidget {
-  const Home({super.key});
+class Home extends StatelessWidget {
+   Home({super.key});
 
   void addDoneEvent() {
     _homeBloc.add(DoneEvent());
   }
 
-  @override
-  State<Home> createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
   String title = "Home";
 
   @override
@@ -36,6 +32,9 @@ class _HomeState extends State<Home> {
             case FeesState():
               title = "Fees";
               break;
+            case UpdateUserState():
+                title = "Update User Details";
+                break;
             case DoneState():
               title = "Done";
             default:
@@ -71,6 +70,8 @@ class _HomeState extends State<Home> {
         return const NewUserCreation();
       case FeesState():
         return Fees();
+      case UpdateUserState():
+        return const UpdateUserDetails();
       case DoneState():
         return Image.asset(
           "assets/bg/done.png",

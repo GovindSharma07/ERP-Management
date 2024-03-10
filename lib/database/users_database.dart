@@ -7,6 +7,9 @@ import 'package:http/http.dart' as http;
 import 'package:erp_management/extra/constants.dart' as constants;
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
+import '../model/driver_model.dart';
+import '../model/teacher_model.dart';
+
 class UsersDatabaseHelper {
   UsersDatabaseHelper._() {
     _initializeUsersDatabase();
@@ -43,6 +46,23 @@ class UsersDatabaseHelper {
           "address TEXT NOT NULL,"
           "course TEXT NOT NULL,"
           "section TEXT NOT NULL)");
+      await _database?.execute("CREATE TABLE IF NOT EXISTS teacher ("
+          "uid TEXT NOT NULL PRIMARY KEY,"
+          "email TEXT NOT NULL,"
+          "fName TEXT NOT NULL,"
+          "lName TEXT NOT NULL,"
+          "department TEXT NOT NULL,"
+          "busAllocated TEXT NOT NULL,"
+          "contact TEXT NOT NULL,"
+          "address TEXT NOT NULL)");
+      await _database?.execute("CREATE TABLE IF NOT EXISTS driver ("
+          "uid TEXT NOT NULL PRIMARY KEY,"
+          "email TEXT NOT NULL,"
+          "fName TEXT NOT NULL,"
+          "lName TEXT NOT NULL,"
+          "busNumber TEXT NOT NULL,"
+          "contact TEXT NOT NULL,"
+          "address TEXT NOT NULL");
     }
   }
 
@@ -57,12 +77,12 @@ class UsersDatabaseHelper {
     }
   }
 
-  Future<List<StudentModel>> getAllUsers(
+  Future<List<StudentModel>> getAllStudents(
       String name, String rollNo, String course, String section) async {
     List<Map<String, dynamic>>? a = await _database?.query("students",
         where:
             "fName LIKE ? AND rollNO LIKE ? AND course LIKE ? AND section LIKE ?",
-        whereArgs: ['%$name%', '%$rollNo%', '%$course', '%$section%']);
+        whereArgs: ['%$name%', '%$rollNo%', '%$course%', '%$section%']);
     List<StudentModel> result = [];
     a?.forEach((element) {
       result.add(StudentModel.fromJson(element));
@@ -82,5 +102,50 @@ class UsersDatabaseHelper {
     } catch (err) {
       print(err);
     }
+  }
+
+  Future<void> addTeacherDetails(TeacherModel teacherModel) async {
+    if ((await _database?.rawQuery(
+            "SELECT uid FROM students WHERE uid = ?", [teacherModel.uid]))!
+        .isEmpty) {
+      await _database?.insert("teacher", teacherModel.toJson());
+    } else {
+      await _database?.update("students", teacherModel.toJson(),
+          where: "uid = ?", whereArgs: [teacherModel.uid]);
+    }
+  }
+
+  Future<List<TeacherModel>> getAllDriver(
+      String name, String department) async {
+    List<Map<String, dynamic>>? a = await _database?.query("teacher",
+        where: "fName LIKE ? AND department LIKE ?",
+        whereArgs: ['%$name%', '%$department%']);
+    List<TeacherModel> result = [];
+    a?.forEach((element) {
+      result.add(TeacherModel.fromJson(element));
+    });
+    return result;
+  }
+
+  Future<void> addDriverDetails(DriverModel driverModel) async {
+    if ((await _database?.rawQuery(
+            "SELECT uid FROM students WHERE uid = ?", [driverModel.uid]))!
+        .isEmpty) {
+      await _database?.insert("driver", driverModel.toJson());
+    } else {
+      await _database?.update("driver", driverModel.toJson(),
+          where: "uid = ?", whereArgs: [driverModel.uid]);
+    }
+  }
+
+  Future<List<DriverModel>> getAllTeachers(String name) async {
+    List<Map<String, dynamic>>? a = await _database?.query("teacher",
+        where: "fName LIKE ?",
+        whereArgs: ['%$name%']);
+    List<DriverModel> result = [];
+    a?.forEach((element) {
+      result.add(DriverModel.fromJson(element));
+    });
+    return result;
   }
 }

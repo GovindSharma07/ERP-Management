@@ -15,8 +15,8 @@ final _teacherEmailController = TextEditingController();
 final _teacherDepartmentController = TextEditingController();
 
 class TeacherDetails extends StatefulWidget {
-  const TeacherDetails({required this.uid, required this.email, super.key});
-
+  const TeacherDetails({required this.uid, required this.email,this.teacherModel, super.key});
+  final TeacherModel? teacherModel;
   final String uid;
   final String email;
 
@@ -25,12 +25,17 @@ class TeacherDetails extends StatefulWidget {
 }
 
 class _TeacherDetailsState extends State<TeacherDetails> {
-
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _teacherUidController.text = widget.uid;
-      _teacherEmailController.text = widget.email;
+      _teacherUidController.text =widget.teacherModel?.uid ?? widget.uid;
+      _teacherEmailController.text = widget.teacherModel?.email ?? widget.email;
+      _teacherFNameController.text = widget.teacherModel?.fName ?? "";
+      _teacherLNameController.text = widget.teacherModel?.lName ?? "";
+      _teacherDepartmentController.text = widget.teacherModel?.department ?? "";
+      _teacherBusAllocatedController.text = widget.teacherModel?.busAllocated?? "";
+      _teacherContactController.text = widget.teacherModel?.contact?? "";
+      _teacherAddressController.text = widget.teacherModel?.fName ?? "";
     });
     return Form(
       key: _formKey,
@@ -130,17 +135,16 @@ Future<void> sendTeacherDetailsToServer() async {
   var valid = _formKey.currentState?.validate();
   if (valid!) {
     var isAdded = await NewUserCreationFunction().addTeacherDetail(TeacherModel(
-            uid: _teacherUidController.text,
-            fName: _teacherFNameController.text,
-            lName: _teacherLNameController.text,
-            busAllocated: _teacherBusAllocatedController.text,
-            contact: _teacherContactController.text,
-            address: _teacherAddressController.text,
-            email: _teacherEmailController.text,
-            department: _teacherDepartmentController.text)
-        .toJson());
+        uid: _teacherUidController.text,
+        fName: _teacherFNameController.text,
+        lName: _teacherLNameController.text,
+        busAllocated: _teacherBusAllocatedController.text,
+        contact: _teacherContactController.text,
+        address: _teacherAddressController.text,
+        email: _teacherEmailController.text,
+        department: _teacherDepartmentController.text));
     if (isAdded) {
-      const Home().addDoneEvent();
+      Home().addDoneEvent();
     }
   }
 }
