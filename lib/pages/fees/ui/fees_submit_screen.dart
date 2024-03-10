@@ -6,6 +6,8 @@ import 'package:erp_management/pages/fees/ui/fees.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 
+import '../../../database/users_database.dart';
+
 class FeesSubmitScreen extends StatelessWidget {
   FeesSubmitScreen(
       {super.key, required this.studentModel, required this.feesBloc});
@@ -133,12 +135,14 @@ class FeesSubmitScreen extends StatelessWidget {
                                 label: const Text("Close")),
                             ElevatedButton.icon(
                                 onPressed: () async {
+                                  studentModel.feesPaid = (int.parse(studentModel.feesPaid) + int.parse(_amountController.text)).toString();
                                   await FeesDatabaseHelper().addFeesDetails(
                                       FeesModel(
                                           studentModel.uid,
                                           int.parse(_amountController.text),
                                           _slipNumberController.text,
                                           DateTime.now()));
+                                  await UsersDatabaseHelper().updateStudentFeesPaid(studentModel);
                                   Navigator.pop(context);
                                   ScaffoldMessenger.of(context)
                                      .showSnackBar(const SnackBar(content: Text("Done")));

@@ -18,6 +18,6 @@ class FeesBloc extends Bloc<FeesEvent, FeesState> {
   }
 
   FutureOr<void> _feesInitialEvent(FeesInitialEvent event, Emitter<FeesState> emit) {
-  emit(FeesInitial());
+  emit(FeesInitial(name: event.name,rollNo: event.rollNo,course: event.course,section: event.section));
   }
 }

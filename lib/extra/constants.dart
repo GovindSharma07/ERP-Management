@@ -9,3 +9,9 @@ const String addTeacherDetailUrl = "http://localhost:4000/api/user/addTeacherDet
 
 /* "https://fcm-notification-server.onrender.com/api/user/addStudentDetails"*/
 const String addStudentDetailUrl = "http://localhost:4000/api/user/addStudentDetails";
+
+// "https://fcm-notification-server.onrender.com/api/user/updateStudentFeesPaid"
+const String updateStudentFeesPaid = "http://localhost:4000/api/user/updateStudentFeesPaid";
+
+// "https://fcm-notification-server.onrender.com/api/user/addFeesDetails"
+const String addFeesDetails = "http://localhost:4000/api/user/addFeesDetails";

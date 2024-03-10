@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:erp_management/model/fees_model.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as path;
+import 'package:erp_management/extra/constants.dart' as constants;
+import 'package:http/http.dart' as http;
 
 class FeesDatabaseHelper {
   FeesDatabaseHelper._() {
@@ -34,5 +38,8 @@ class FeesDatabaseHelper {
 
   Future<void> addFeesDetails(FeesModel feesModel) async {
     await _database?.insert("fees", feesModel.toJson());
+    var url = Uri.parse(constants.addFeesDetails);
+    await http.post(url,
+    headers: {"Content-Type": "application/json"}, body: jsonEncode(feesModel.toJson()));
   }
 }

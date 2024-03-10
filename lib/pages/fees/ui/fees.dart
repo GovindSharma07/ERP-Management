@@ -3,13 +3,20 @@ import "package:erp_management/model/student_model.dart";
 import "package:erp_management/pages/fees/bloc/fees_bloc.dart";
 import "package:erp_management/pages/fees/ui/fees_submit_screen.dart";
 import "package:erp_management/widgets/student_detail_bubble.dart";
+import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
+import "package:flutter/widgets.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
 
 class Fees extends StatelessWidget {
   Fees({super.key});
 
   final userDb = UsersDatabaseHelper();
+
+  final name = TextEditingController();
+  final rollNo = TextEditingController();
+  final course = TextEditingController();
+  final section = TextEditingController();
 
   final FeesBloc _feesBloc = FeesBloc();
 
@@ -23,29 +30,70 @@ class Fees extends StatelessWidget {
               studentModel: state.studentModel,
               feesBloc: _feesBloc,
             );
-          } else {
+          } else if(state is FeesInitial){
             return Column(
               children: [
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Placeholder(
-                      child: Text("Student name"),
-                    ),
-                    Placeholder(
-                      child: Text("student roll no "),
-                    ),
-                    Placeholder(
-                      child: Text('course'),
-                    ),
-                    Placeholder(
-                      child: Text("section"),
-                    )
-                  ],
-                ),
+
+                 Container(
+                   margin: const EdgeInsets.all(20),
+                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: name,
+                          onChanged: (val){
+                            _feesBloc.add(FeesInitialEvent(name: name.text,rollNo: rollNo.text,course: course.text,section: section.text));
+                          },
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: "Name"
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: TextField(
+                          controller: rollNo,
+                          onChanged: (val){
+                            _feesBloc.add(FeesInitialEvent(name: name.text,rollNo: rollNo.text,course: course.text,section: section.text));
+                          },
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                              labelText: "Roll No"
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: TextField(
+                          controller: course,
+                          onChanged: (val){
+                            _feesBloc.add(FeesInitialEvent(name: name.text,rollNo: rollNo.text,course: course.text,section: section.text));
+                          },
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                              labelText: "Course"
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: TextField(
+                          controller: name,
+                          onChanged: (val){
+                            _feesBloc.add(FeesInitialEvent(name: name.text,rollNo: rollNo.text,course: course.text,section: section.text));
+                          },
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                              labelText: "Section"
+                          ),
+                        ),
+                      )
+                    ],
+                                   ),
+                 ),
                 Expanded(
                   child: FutureBuilder<List<StudentModel>>(
-                      future: userDb.getAllUsers(),
+                      future: userDb.getAllUsers(state.name,state.rollNo,state.course,state.section),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           return ListView.builder(
@@ -68,6 +116,8 @@ class Fees extends StatelessWidget {
                 )
               ],
             );
+          }else{
+            return const Expanded(child: SizedBox());
           }
         });
   }
