@@ -54,14 +54,15 @@ class _NewUserCreationState extends State<NewUserCreation> {
                   ? const Center(child: CircularProgressIndicator())
                   : Row(
                       children: [
-                        ElevatedButton(
-                          onPressed: controlDetails.onStepContinue,
-                          child: const Text('Next'),
-                        ),
-                        const SizedBox(width: 20),
+
                         ElevatedButton(
                           onPressed: controlDetails.onStepCancel,
                           child: const Text('Back'),
+                        ),
+                        const SizedBox(width: 20),
+                        ElevatedButton(
+                          onPressed: controlDetails.onStepContinue,
+                          child: const Text('Next'),
                         ),
                       ],
                     ));

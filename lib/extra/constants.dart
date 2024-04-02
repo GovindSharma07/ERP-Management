@@ -15,3 +15,11 @@ const String updateStudentFeesPaid = "http://localhost:4000/api/user/updateStude
 
 // "https://fcm-notification-server.onrender.com/api/user/addFeesDetails"
 const String addFeesDetails = "http://localhost:4000/api/user/addFeesDetails";
+
+const String getStudentData = "http://localhost:4000/api/user/getData/student";
+
+
+const String getTeacherData = "http://localhost:4000/api/user/getData/teacher";
+
+
+const String getDriverData = "http://localhost:4000/api/user/getData/driver";

@@ -62,7 +62,7 @@ class UsersDatabaseHelper {
           "lName TEXT NOT NULL,"
           "busNumber TEXT NOT NULL,"
           "contact TEXT NOT NULL,"
-          "address TEXT NOT NULL");
+          "address TEXT NOT NULL)");
     }
   }
 
@@ -78,11 +78,11 @@ class UsersDatabaseHelper {
   }
 
   Future<List<StudentModel>> getAllStudents(
-      String name, String rollNo, String course, String section) async {
+      String name, String rollNo, String course, String section,String email,String uid) async {
     List<Map<String, dynamic>>? a = await _database?.query("students",
         where:
-            "fName LIKE ? AND rollNO LIKE ? AND course LIKE ? AND section LIKE ?",
-        whereArgs: ['%$name%', '%$rollNo%', '%$course%', '%$section%']);
+            "fName LIKE ? AND rollNO LIKE ? AND course LIKE ? AND section LIKE ? AND email LIKE ? AND uid LIKE ?",
+        whereArgs: ['%$name%', '%$rollNo%', '%$course%', '%$section%','%$email%','%$uid%']);
     List<StudentModel> result = [];
     a?.forEach((element) {
       result.add(StudentModel.fromJson(element));
@@ -115,11 +115,11 @@ class UsersDatabaseHelper {
     }
   }
 
-  Future<List<TeacherModel>> getAllDriver(
-      String name, String department) async {
+  Future<List<TeacherModel>> getAllTeachers(
+      String name, String department,String email,String uid) async {
     List<Map<String, dynamic>>? a = await _database?.query("teacher",
-        where: "fName LIKE ? AND department LIKE ?",
-        whereArgs: ['%$name%', '%$department%']);
+        where: "fName LIKE ? AND department LIKE ? AND email LIKE ? AND uid LIKE ?",
+        whereArgs: ['%$name%', '%$department%','%$email%','%$uid%']);
     List<TeacherModel> result = [];
     a?.forEach((element) {
       result.add(TeacherModel.fromJson(element));
@@ -138,10 +138,10 @@ class UsersDatabaseHelper {
     }
   }
 
-  Future<List<DriverModel>> getAllTeachers(String name) async {
-    List<Map<String, dynamic>>? a = await _database?.query("teacher",
-        where: "fName LIKE ?",
-        whereArgs: ['%$name%']);
+  Future<List<DriverModel>> getAllDriver(String name,String email,String uid) async {
+    List<Map<String, dynamic>>? a = await _database?.query("driver",
+        where: "fName LIKE ? AND email LIKE ? AND uid LIKE ?",
+        whereArgs: ['%$name%','%$email%','%$uid%']);
     List<DriverModel> result = [];
     a?.forEach((element) {
       result.add(DriverModel.fromJson(element));

@@ -1,3 +1,6 @@
+import 'package:erp_management/model/driver_model.dart';
+import 'package:erp_management/model/student_model.dart';
+import 'package:erp_management/model/teacher_model.dart';
 import 'package:erp_management/widgets/user_details/driver_detail_screen.dart';
 import 'package:erp_management/widgets/user_details/student_detail_screen.dart';
 import 'package:erp_management/widgets/user_details/teacher_detail_screen.dart';
@@ -10,14 +13,14 @@ class UserTypeSelection extends StatefulWidget {
 
   UserType? userType = UserType.teacher;
 
-   Widget getDetailUi(String email,String uid) {
+   Widget getDetailUi(String email,String uid,{StudentModel? studentModel,TeacherModel? teacherModel,DriverModel? driverModel}) {
      if(userType == UserType.driver){
-       return DriverDetails(email: email,uid: uid);
+       return DriverDetails(email: email,uid: uid,driverModel: driverModel,);
      }else if(userType == UserType.student){
-       return StudentDetails(uid: uid, email: email);
+       return StudentDetails(uid: uid, email: email,studentModel: studentModel,);
      }
      else{
-       return TeacherDetails(uid: uid, email: email);
+       return TeacherDetails(uid: uid, email: email,teacherModel: teacherModel,);
      }
    }
   

@@ -93,7 +93,7 @@ class Fees extends StatelessWidget {
                  ),
                 Expanded(
                   child: FutureBuilder<List<StudentModel>>(
-                      future: userDb.getAllStudents(state.name,state.rollNo,state.course,state.section),
+                      future: userDb.getAllStudents(state.name,state.rollNo,state.course,state.section,"",""),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           return ListView.builder(
